@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_number_generate_collection
+      author: Aliaksandr_Hryharovich
+      changes:
+        - createCollection:
+          collectionName: number_generate
+  - changeSet:
+      id: create_structure_number_generate_collection
+      author: Aliaksandr_Hryharovich
+      changes:
+        - createCollection:
+          collectionName: number_generate
+          options:
+            validator:
+              $jsonSchema:
+                bsonType: "object"
+                required: [ "id", "order_number", "order_id" ]
+                properties:
+                  orderNumber:
+                    bsonType: "objectId"
+                    description: "id"
+                  createdAt:
+                    bsonType: "string"
+                    description: "order_number"
+                  status:
+                    bsonType: "long"
+                    description: "order_id"

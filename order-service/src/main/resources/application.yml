@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: orders-service
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/orders_service?currentSchema=orders_service_schema
+    username: postgres
+    password: 123
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: api/v1/api-docs
+  swagger-ui:
+    url: /openapi.yaml
+    path: /swagger-ui.html
+
+app:
+  openapi:
+    local-url: http://localhost:8080
+
+

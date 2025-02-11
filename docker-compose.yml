@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  order-service:
+    build: ./order-service
+    container_name: orders-servic
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres_data
+    environment:
+      - SERVER_PORT= 8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db:5432/orders_service?currentSchema=orders_service_schema
+
+  postgres_data:
+    container_name: postgres_db
+    image: postgres:15
+    environment:
+      POSTGRES_DB: orders_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./order-service/infrastructure/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+#      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  number-generate-service:
+    build: ./number-generate-service
+    container_name: number-generate-service
+    restart: always
+    depends_on:
+      - mongo_data
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:mongo@mongo-db:27017/numberGenerateService
+    ports:
+      - "8081:8081"
+
+  mongo_data:
+    image: mongo:6
+    container_name: mongo-db
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: numberGenerateService
+
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+
+volumes:
+  postgres_data:
+  mongo_data:

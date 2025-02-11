@@ -1,0 +1,240 @@
+openapi: 3.0.3
+info:
+  title: Order Service API
+  description: API для управления заказами
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/v1/orders
+    description: Local server
+paths:
+  /:
+    post:
+      summary: Создание заказа
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderDto'
+      responses:
+        '201':
+          description: Заказ успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderInfoDto'
+  /{id}:
+    get:
+      summary: Получение заказа по его идентификатору
+      operationId: getOrderById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Информация о заказе
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDto'
+  /filter:
+    get:
+      summary: Получение заказа за заданную дату и больше заданной общей суммы
+      operationId: getOrdersByDateAndTotal
+      parameters:
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: total
+          in: query
+          required: false
+          schema:
+            type: number
+            format: double
+      responses:
+        '200':
+          description: Найденные заказы
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDto'
+  /exclude:
+    get:
+      summary: Получение списка заказов, не содержащих заданный товар и поступивших в заданный временной период
+      operationId: getOrdersWithoutProduct
+      parameters:
+        - name: startDate
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: good
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Найденные заказы
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDto'
+components:
+  schemas:
+    CreateOrderDto:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Номер заказа
+          example: "0000020250111"
+          total:
+            type: number
+            format: BigDecimal
+            description: Общая сумма заказа
+            example: 2500.75
+          orderDate:
+            type: string
+            format: date
+            description: Дата заказа
+            example: "2025-02-11"
+          recipient:
+            type: string
+            description: Получатель
+            example: "Иван Иванов"
+          addressDelivery:
+            type: string
+            description: Адрес доставки
+            example: "ул. Сурганово, д. 29, Минск"
+          typeOfPayment:
+            type: string
+            description: Способ оплаты
+            enum: [ КАРТА, НАЛИЧНЫЕ ]
+            example: "КАРТА"
+          typeOfDelivery:
+            type: string
+            description: Тип доставки
+            enum: [ САМОВЫВОЗ, ДОСТАВКА ДО ДВЕРИ ]
+            example: "САМОВЫВОЗ"
+          orderDetails:
+            type: list
+            description: Детали заказа
+            items:
+            $ref: "#/components/schemas/OrderDetailsDto"
+
+    OrderInfoDto:
+      type: object
+      properties:
+        id:
+          type: Long
+
+    NumberGenerateDto:
+      number:
+        type: string
+        description: Номер заказа
+        example: "0000020250111"
+
+
+    OrderDto:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Номер заказа
+          example: "0000020250111"
+          total:
+            type: number
+            format: BigDecimal
+            description: Общая сумма заказа
+            example: 2500.75
+          orderDate:
+            type: string
+            format: date
+            description: Дата заказа
+            example: "2025-02-11"
+          recipient:
+            type: string
+            description: Получатель
+            example: "Иван Иванов"
+          addressDelivery:
+            type: string
+            description: Адрес доставки
+            example: "ул. Сурганово, д. 29, Минск"
+          typeOfPayment:
+            type: string
+            description: Способ оплаты
+            enum: [ КАРТА, НАЛИЧНЫЕ ]
+            example: "КАРТА"
+          typeOfDelivery:
+            type: string
+            description: Тип доставки
+            enum: [ САМОВЫВОЗ, ДОСТАВКА ДО ДВЕРИ ]
+            example: "САМОВЫВОЗ"
+          orderDetails:
+            type: list
+            description: Детали заказа
+            items:
+            $ref: "#/components/schemas/OrderDetailsDto"
+
+    OrderDetailsDto:
+      type: object
+      description: Детали заказа
+      properties:
+        article:
+          type: Long
+          description: артикул
+          example: "12345"
+        title:
+          type: string
+          description: название
+          example: "Ноутбук"
+        price:
+          type: count
+          format: int
+          description: Цена за единицу
+          example: 1250.38
+        orderId:
+          type: Long
+          description: id order
+          example: 1
+
+    CreateOrderDetailsDto:
+      type: object
+      description: Детали заказа
+      properties:
+        article:
+          type: Long
+          description: артикул
+          example: "12345"
+        title:
+          type: string
+          description: название
+          example: "Ноутбук"
+        price:
+          type: count
+          format: int
+          description: Цена за единицу
+          example: 1250.38
+        orderId:
+          type: Long
+          description: id order
+          example: 1

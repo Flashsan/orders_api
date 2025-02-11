@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-02-09-01-create_orders_table
+      author: Aliaksandr_Hryharovich
+      changes:
+        - createTable:
+            tableName: orders
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: number
+                  type: varchar(255)
+              - column:
+                  name: total
+                  type: decimal(10,2)
+              - column:
+                  name: order_date
+                  type: date
+              - column:
+                  name: recipient
+                  type: varchar(255)
+              - column:
+                  name: address_delivery
+                  type: varchar(255)
+              - column:
+                  name: type_of_payment
+                  type: varchar(255)
+              - column:
+                  name: type_of_delivery
+                  type: varchar(255)
+

@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-02-09-02-create_orders_details_table.yaml
+      author: Aliaksandr_Hryharovich
+      changes:
+        - createTable:
+            tableName: orders_details
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: article
+                  type: bigint
+              - column:
+                  name: title
+                  type: varchar(255)
+              - column:
+                  name: count
+                  type: bigint
+              - column:
+                  name: price
+                  type: decimal(10,2)
+              - column:
+                  name: order_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_order
+                    references:
+                      tableName: order
+                      columnNames: id
