@@ -51,12 +51,11 @@ class OrderServiceTest {
 
     @BeforeEach
     void setup() {
-createOrderDetailsDto = new CreateOrderDetailsDto();
+        createOrderDetailsDto = new CreateOrderDetailsDto();
         createOrderDetailsDto.setArticle(123L);
         createOrderDetailsDto.setTitle("Товар");
         createOrderDetailsDto.setPrice(BigDecimal.valueOf(250));
         createOrderDetailsDto.setCount(2);
-
 
 
         createOrderDto = new CreateOrderDto();

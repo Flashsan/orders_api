@@ -20,13 +20,3 @@ public interface OrderMapper {
 
 }
 
-//    @Mappings({
-//            @Mapping(target = "number", ignore = true),
-//            @Mapping(target = "total", ignore = true),
-//            @Mapping(target = "orderDate", ignore = true),
-//            @Mapping(target = "recipient", ignore = true),
-//            @Mapping(target = "addressDelivery", ignore = true),
-//            @Mapping(target = "typeOfPayment", ignore = true),
-//            @Mapping(target = "typeOfDelivery", ignore = true),
-//            @Mapping(target = "orderDetails", ignore = true)
-//    })

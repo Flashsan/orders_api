@@ -2,16 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.0-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
+
     <groupId>com.itq-group</groupId>
     <artifactId>number-generate-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>number-generate-service</name>
+
     <description>
         Implement a method (/numbers) that will return the generated order number (5
         characters) and current and time (YYYYMMDD format), example 1111120241212.
@@ -20,23 +23,6 @@
         the main requirement for the order number is that there is no duplication.
         A data structure can be used for storage.
     </description>
-
-    <url/>
-
-    <licenses>
-        <license/>
-    </licenses>
-
-    <developers>
-        <developer/>
-    </developers>
-
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
 
     <properties>
         <java.version>17</java.version>
@@ -53,7 +39,6 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -134,16 +119,15 @@
 
         <dependency>
             <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${org.springdoc.springdoc-openapi-starter-webmvc-ui}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>${org.springdoc.springdoc-openapi-ui}</version>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>org.springdoc</groupId>-->
-<!--            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>-->
-<!--            <version>2.8.4</version>-->
-<!--        </dependency>-->
-
     </dependencies>
 
     <build>

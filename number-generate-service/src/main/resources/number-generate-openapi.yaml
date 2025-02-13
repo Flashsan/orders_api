@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: Number generator service API
+  description: This API describe our number generator service
+  contact:
+    name: ITQ GROUP
+    url: https://itq-group.com/
+    email: itq_group@itq_group.com
+  version: '1.0'
+servers:
+  - url: http://localhost:8081
+    description: Localhost number generate server
+paths:
+  "/api/v1/numbers":
+    post:
+      tags:
+        - number-generate-controller
+      operationId: generateOrderNumber
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/NumberGenerateDto"
+components:
+  schemas:
+    NumberGenerateDto:
+      type: object
+      properties:
+        orderNumber:
+          type: string

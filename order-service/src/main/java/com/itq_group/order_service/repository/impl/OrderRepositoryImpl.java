@@ -21,16 +21,26 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
+    private final String sqlSave = "INSERT INTO orders (number, total, order_date, recipient, address_delivery, type_of_payment, type_of_delivery) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING id";
+    private final String sqlSaveOrderDetails = "INSERT INTO orders_details (article,title,count,price,order_id) VALUES (?, ?, ?, ?, ?)";
+    private final String sqlFindById = "SELECT * FROM orders WHERE id=?";
+    private final String sqlFindByOrderDateAndTotal = "SELECT * FROM orders WHERE order_date = ? AND total > ?";
+    private final String sqlGetExcludeGoodAtFixTime = """
+                                   SELECT DISTINCT o.* FROM orders o
+                                   WHERE o.order_date BETWEEN ? AND ?
+                                   AND NOT EXISTS (
+                                       SELECT 1 FROM orders_details od WHERE od.order_id = o.id AND LOWER(od.title) = LOWER(?) 
+                                   )
+                """;
+
     @Override
     public int save(OrderEntity orders) {
-        String SAVE_SQL = "INSERT INTO orders (number, total, order_date, recipient, address_delivery, type_of_payment, type_of_delivery) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING id";
-
         Integer orderId =
                 jdbcTemplate.queryForObject(
-                        SAVE_SQL,
+                        sqlSave,
                         new Object[]{orders.getNumber(), orders.getTotal(), orders.getOrderDate(), orders.getRecipient(), orders.getAddressDelivery(), orders.getTypeOfPayment().name(), orders.getTypeOfDelivery().name()}, Integer.class);
 
-        if(orderId == null){
+        if (orderId == null) {
             throw new RuntimeException("Id null");
         }
 
@@ -39,11 +49,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     private void saveOrderDetails(Long orderId, List<OrderDetailsEntity> ordersDetails) {
-        String sql = "INSERT INTO orders_details (article,title,count,price,order_id) VALUES (?, ?, ?, ?, ?)";
-
         for (OrderDetailsEntity detail : ordersDetails) {
-            jdbcTemplate.update(sql,
-                    detail.getArticle(), detail.getTitle(), detail.getCount(),detail.getPrice(), orderId);
+            jdbcTemplate.update(sqlSaveOrderDetails,
+                    detail.getArticle(), detail.getTitle(), detail.getCount(), detail.getPrice(), orderId);
         }
     }
 
@@ -51,7 +59,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     public OrderEntity findById(Long id) {
         try {
             OrderEntity order = jdbcTemplate.queryForObject(
-                    "SELECT * FROM orders WHERE id=?",
+                    sqlFindById,
                     BeanPropertyRowMapper.newInstance(OrderEntity.class), id);
             return order;
         } catch (IncorrectResultSizeDataAccessException ex) {
@@ -61,21 +69,12 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public List<OrderEntity> findByOrderDateAndTotal(LocalDate orderDate, BigDecimal total) {
-        String sqlQuery = "SELECT * FROM orders WHERE order_date = ? AND total > ?";
-        return jdbcTemplate.query(sqlQuery, new OrderRowMapper(), orderDate, total);
+        return jdbcTemplate.query(sqlFindByOrderDateAndTotal, new OrderRowMapper(), orderDate, total);
     }
 
     @Override
     public List<OrderEntity> getExcludeGoodAtFixTime(LocalDate startDate, LocalDate endDate, String good) {
-
-        String sql = """
-            SELECT DISTINCT o.* FROM orders o
-            WHERE o.order_date BETWEEN ? AND ?
-            AND NOT EXISTS (
-                SELECT 1 FROM orders_details od WHERE od.order_id = o.id AND LOWER(od.title) = LOWER(?) 
-            )
-        """;
-        return jdbcTemplate.query(sql, new OrderRowMapper(), startDate, endDate, good);
+        return jdbcTemplate.query(sqlGetExcludeGoodAtFixTime, new OrderRowMapper(), startDate, endDate, good);
     }
 
 

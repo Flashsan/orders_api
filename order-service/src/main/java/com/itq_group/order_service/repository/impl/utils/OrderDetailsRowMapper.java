@@ -1,9 +1,6 @@
 package com.itq_group.order_service.repository.impl.utils;
 
 import com.itq_group.order_service.entity.OrderDetailsEntity;
-import com.itq_group.order_service.entity.OrderEntity;
-import com.itq_group.order_service.entity.enums.TypeOfDelivery;
-import com.itq_group.order_service.entity.enums.TypeOfPayment;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

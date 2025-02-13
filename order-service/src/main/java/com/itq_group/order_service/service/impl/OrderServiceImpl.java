@@ -10,7 +10,6 @@ import com.itq_group.order_service.repository.OrderRepository;
 import com.itq_group.order_service.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -57,7 +56,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    @Transactional
     @Override
     public OrderDto findById(Long id) {
         OrderEntity order = orderRepository.findById(id);
