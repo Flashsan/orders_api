@@ -18,13 +18,13 @@ spring:
     compatibility-verifier:
       enabled: false
 
-springdoc:
-  api-docs:
-    enabled: true
-    path: api/v1/api-docs
-  swagger-ui:
-    url: /openapi.yaml
-    path: /swagger-ui.html
+#springdoc:
+#  api-docs:
+#    enabled: true
+#    path: api/v1/api-docs
+#  swagger-ui:
+#    url: /openapi.yaml
+#    path: api/v1/swagger-ui.html
 
 app:
   openapi:

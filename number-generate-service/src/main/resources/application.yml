@@ -16,11 +16,11 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
 
 
-#springdoc:
-#  swagger-ui:
-#    path: /api/v1/swagger-ui
-#  api-docs:
-#    path: /api/v1/swagger.json
+springdoc:
+  swagger-ui:
+    path: /api/v1/swagger-ui
+  api-docs:
+    path: /api/v1/swagger.json
 
 
 app:

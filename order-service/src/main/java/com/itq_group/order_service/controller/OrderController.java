@@ -4,6 +4,7 @@ import com.itq_group.order_service.dto.CreateOrderDto;
 import com.itq_group.order_service.dto.OrderDto;
 import com.itq_group.order_service.dto.OrderInfoDto;
 import com.itq_group.order_service.service.OrderService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-
+@Tag(name = "OrderController", description = "Order APIs")
 @RestController
 @RequestMapping("api/v1/orders")
 @RequiredArgsConstructor
