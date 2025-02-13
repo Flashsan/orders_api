@@ -2,41 +2,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.0-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.itq-group</groupId>
     <artifactId>order-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>order-service</name>
+
     <description>The following API (/orders) must be implemented:
         1. Order creation
         2. Receiving an order by its identifier
         3. Receiving an order for a specified date and more than the specified total amount of the order
         4. Getting a list of orders that do not contain the specified product and were received during the specified time period.
     </description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+
     <properties>
         <java.version>17</java.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+        <org.liquibase.liquibase-core>4.30.0</org.liquibase.liquibase-core>
+        <org.openapitools.jackson-databind-nullable>0.2.1</org.openapitools.jackson-databind-nullable>
         <spring-cloud.version>2024.0.0</spring-cloud.version>
+        <org.springdoc.springdoc-openapi-ui>1.8.0</org.springdoc.springdoc-openapi-ui>
+        <org.springdoc.springdoc-openapi-starter-webmvc-ui>2.8.4</org.springdoc.springdoc-openapi-starter-webmvc-ui>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -69,25 +65,25 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>4.30.0</version>
+            <version>${org.liquibase.liquibase-core}</version>
         </dependency>
 
         <dependency>
             <groupId>org.openapitools</groupId>
             <artifactId>jackson-databind-nullable</artifactId>
-            <version>0.2.1</version>
+            <version>${org.openapitools.jackson-databind-nullable}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.8.4</version>
+            <version>${org.springdoc.springdoc-openapi-starter-webmvc-ui}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.8.0</version>
+            <version>${org.springdoc.springdoc-openapi-ui}</version>
         </dependency>
 
         <dependency>
@@ -136,7 +132,6 @@
             <artifactId>spring-boot-test</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <dependencyManagement>
